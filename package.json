@@ -5,6 +5,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
     "cors": "^2.8.5"
   }
 }
