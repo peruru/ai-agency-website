@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advaya.ai - AI Consulting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        advaya: {
+                            primary: '#4F46E5',
+                            dark: '#312E81',
+                            light: '#C7D2FE',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+        }
+        .result-box {
+            transition: all 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+        .result-box.show {
+            max-height: 1000px;
+            margin-top: 1.5rem;
+        }
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center mr-3">
+                    <i class="fas fa-robot text-white text-xl"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-800">Advaya.ai</h1>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <div class="flex items-center space-x-4">
+                    <span class="text-gray-600">I am interested:</span>
+                    <div class="relative">
+                        <input type="email" placeholder="Email" class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-advaya-primary focus:border-transparent">
+                        <i class="fas fa-envelope absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    <div class="relative">
+                        <input type="tel" placeholder="Phone number" class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-advaya-primary focus:border-transparent">
+                        <i class="fas fa-phone absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="md:hidden text-gray-600">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-16 md:py-24">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Advaya.ai - AI Consulting</h1>
+            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">We help you achieve your AI goals for improved productivity.</p>
+            
+            <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-6">
+                <div class="mb-4">
+                    <label for="companyUrl" class="block text-gray-700 text-left font-medium mb-2">My company URL</label>
+                    <div class="relative">
+                        <input type="url" id="companyUrl" placeholder="https://example.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-advaya-primary focus:border-transparent">
+                        <i class="fas fa-globe absolute right-3 top-3 text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <div class="flex items-center mb-6">
+                    <input type="checkbox" id="authorizeCheckbox" class="w-5 h-5 text-advaya-primary rounded focus:ring-advaya-primary">
+                    <label for="authorizeCheckbox" class="ml-2 text-gray-700">I authorize Advaya.ai to analyze my company website</label>
+                </div>
+                
+                <button id="analyzeBtn" class="w-full gradient-bg hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                    <span>Analyze my business for AI</span>
+                </button>
+                
+                <div id="loadingSpinner" class="hidden mt-4">
+                    <div class="flex items-center justify-center space-x-2">
+                        <div class="w-5 h-5 border-2 border-white border-t-advaya-primary rounded-full loading-spinner"></div>
+                        <span class="text-gray-700">Analyzing your website...</span>
+                    </div>
+                </div>
+                
+                <div id="resultBox" class="result-box bg-gray-50 rounded-lg p-4 mt-0">
+                    <div id="analysisResult" class="text-gray-700 text-left"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our AI Consulting Services</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-brain text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">AI Strategy Development</h3>
+                    <p class="text-gray-600">We help you create a comprehensive AI roadmap aligned with your business objectives.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-line text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Process Automation</h3>
+                    <p class="text-gray-600">Identify and automate repetitive tasks to boost efficiency and reduce operational costs.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-users-cog text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Custom AI Solutions</h3>
+                    <p class="text-gray-600">Tailored AI implementations designed specifically for your unique business needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">What Our Clients Say</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center mr-3">
+                            <i class="fas fa-user text-gray-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Sarah Johnson</h4>
+                            <p class="text-sm text-gray-500">CEO, TechSolutions Inc.</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"Advaya.ai transformed our customer service operations with their AI chatbot solution, reducing response times by 70%."</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center mr-3">
+                            <i class="fas fa-user text-gray-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Michael Chen</h4>
+                            <p class="text-sm text-gray-500">CTO, RetailGenius</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"Their predictive analytics platform helped us optimize inventory management, saving us over $200k annually."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center mr-3">
+                            <i class="fas fa-robot text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Advaya.ai</h3>
+                    </div>
+                    <p class="text-gray-400">Empowering businesses with intelligent AI solutions since 2023.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">AI Strategy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Process Automation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Custom Solutions</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">AI Training</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-advaya-primary transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-advaya-primary transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-advaya-primary transition">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400">hello@advaya.ai</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 Advaya.ai. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const companyUrlInput = document.getElementById('companyUrl');
+            const authorizeCheckbox = document.getElementById('authorizeCheckbox');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const resultBox = document.getElementById('resultBox');
+            const analysisResult = document.getElementById('analysisResult');
+            
+            analyzeBtn.addEventListener('click', async function() {
+                const url = companyUrlInput.value.trim();
+                const isAuthorized = authorizeCheckbox.checked;
+                
+                if (!url) {
+                    alert('Please enter your company URL');
+                    return;
+                }
+                
+                if (!isAuthorized) {
+                    alert('Please authorize us to analyze your website');
+                    return;
+                }
+                
+                // Validate URL format
+                try {
+                    new URL(url);
+                } catch (e) {
+                    alert('Please enter a valid URL (e.g., https://example.com)');
+                    return;
+                }
+                
+                // Show loading spinner
+                analyzeBtn.disabled = true;
+                loadingSpinner.classList.remove('hidden');
+                resultBox.classList.remove('show');
+                
+                try {
+                    // Simulate API call to backend
+                    // In a real implementation, this would be a fetch call to your Node.js backend
+                    const response = await simulateBackendCall(url);
+                    
+                    // Display results
+                    analysisResult.innerHTML = formatAnalysisResults(response);
+                    resultBox.classList.add('show');
+                } catch (error) {
+                    console.error('Error:', error);
+                    analysisResult.innerHTML = `<p class="text-red-500">Error analyzing website: ${error.message}</p>`;
+                    resultBox.classList.add('show');
+                } finally {
+                    loadingSpinner.classList.add('hidden');
+                    analyzeBtn.disabled = false;
+                }
+            });
+            
+            // This function simulates what your backend would do
+            async function simulateBackendCall(url) {
+                // In a real implementation, your Node.js backend would:
+                // 1. Receive the URL from this frontend call
+                // 2. Call OpenRouter API with DeepSeek model
+                // 3. Process the response and return it to frontend
+                
+                // For demo purposes, we'll simulate a response
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        const mockResponse = {
+                            analysis: `Based on our analysis of ${url}, we've identified several AI opportunities for your business:
+                            
+                            <h3 class="font-bold text-lg mb-2 text-gray-800">Key Findings</h3>
+                            <ul class="list-disc pl-5 mb-4 space-y-1">
+                                <li>Your website could benefit from an AI-powered chatbot to handle customer inquiries</li>
+                                <li>We detected opportunities for automating content personalization based on visitor behavior</li>
+                                <li>Your product pages could be enhanced with AI-driven recommendations</li>
+                            </ul>
+                            
+                            <h3 class="font-bold text-lg mb-2 text-gray-800">Recommended Actions</h3>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Implement AI-driven customer segmentation for targeted marketing</li>
+                                <li>Automate lead qualification with machine learning</li>
+                                <li>Add predictive analytics to your sales funnel</li>
+                            </ul>
+                            
+                            <div class="mt-6 p-4 bg-advaya-light rounded-lg">
+                                <p class="font-semibold text-advaya-dark">Estimated impact: 35-50% increase in conversion rates with proper AI implementation.</p>
+                            </div>`
+                        };
+                        resolve(mockResponse);
+                    }, 2000);
+                });
+            }
+            
+            function formatAnalysisResults(response) {
+                return response.analysis;
+            }
+        });
+    </script>
+</body>
+</html>
