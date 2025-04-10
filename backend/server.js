@@ -5,6 +5,7 @@ const path = require('path');
 const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
+const { generateAiFromUrl } = require('./services/services');
 
 const {
     crawlAndSummarize,
@@ -200,6 +201,34 @@ app.post('/api/analyze-urls', async (req, res) => {
 
     } catch (error) {
         logger.error({ error: error.message }, 'Error analyzing URLs');
+        timing.logCompletion();
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.post('/api/generate_ai', async (req, res) => {
+    try {
+        const { url } = req.body;
+
+        if (!url) {
+            logger.warn('URL is required but not provided');
+            return res.status(400).json({ error: 'URL is required' });
+        }
+
+        timing.logWithTime(`Starting AI generation for ${url}`);
+        const results = await generateAiFromUrl(url, process.env.DEEPSEEK_API_KEY);
+        timing.logWithTime('AI generation completed');
+
+        res.json({
+            results,
+            stats: {
+                urlsProcessed: results.length,
+                processingTime: ((Date.now() - timing.getStartTimestamp()) / 1000).toFixed(2) + 's'
+            }
+        });
+
+    } catch (error) {
+        logger.error({ error: error.message }, 'Error generating AI analysis');
         timing.logCompletion();
         res.status(500).json({ error: error.message });
     }

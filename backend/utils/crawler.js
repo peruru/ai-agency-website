@@ -60,7 +60,7 @@ async function filterNonEssentialLinks(links) {
     const linksArray = Array.from(links);
     logger.info({ links: linksArray }, 'Input links for filtering');
     
-    const prompt = `You are a URL filter. Given a list of URLs, remove any that represent news, newsroom, team, leadership, contact, case studies, resources, about, webinars, blogs, events, policies, or careers pages.
+    const prompt = `You are a URL filter. Given a list of URLs, remove any that represent frequently asked questions (faq), news, newsroom, investors corner, Testimonials, team, leadership, management,contact, case studies, resources, facilities,about, company profile,webinars, blogs, events, gallery,partnerships,sustainability,policies, or careers pages.
 
 Input URLs:
 ${linksArray.join('\n')}
@@ -103,12 +103,25 @@ Return only a JSON array of filtered URLs. Do not include any markdown formattin
 }
 
 // Update module exports
+// Remove or comment out the first export
+// module.exports = {
+//     crawlAndSummarize,
+//     formatBusinessSummary,
+//     timing,
+//     logger,
+//     filterNonEssentialLinks // Remove this duplicate export
+// };
+
+// Keep only the final export at the bottom of the file
 module.exports = {
     crawlAndSummarize,
     formatBusinessSummary,
     timing,
     logger,
-    filterNonEssentialLinks // Add this to exports
+    filterNonEssentialLinks,
+    collectInternalUrls,
+    getTextFromUrl,
+    summarizeWithDeepseek
 };
 
 async function formatBusinessSummary(markdown, domain) {
@@ -190,6 +203,8 @@ async function summarizeWithDeepseek(text, apiKey) {
     5. Ignore recruitment details. \n\n
     6. Ignore press releases. \n\n
     7. Ignore Testimonials. \n\n
+    8. Do not generate line breaks. \n\n
+    9. Do not include numbers in any heading level. \n\n
     
     From the generated summary identify the following: \n\n
     1. Touch points for implementing AI/ML.  Explain atleast in two sentences what the AI touch point means to business. \n\n
@@ -314,13 +329,3 @@ async function collectInternalUrls(startUrl, maxDepth = 3) {
     logger.info(`URL collection completed. Found ${allLinks.size} unique internal URLs`);
     return allLinks;
 }
-
-// Update module.exports to include the new function
-module.exports = {
-    crawlAndSummarize,
-    formatBusinessSummary,
-    timing,
-    logger,
-    filterNonEssentialLinks,
-    collectInternalUrls
-};
